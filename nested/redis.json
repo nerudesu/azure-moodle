@@ -24,9 +24,9 @@
             "properties": {
                 "enableNonSslPort": true,
                 "sku": {
-                    "capacity": 0,
-                    "family": "C",
-                    "name": "Standard"
+                    "capacity": 1,
+                    "family": "P",
+                    "name": "Premium"
                 },
                 "subnetId": "[parameters('subnetIdRedis')]"
             }
