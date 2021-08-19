@@ -4,21 +4,6 @@
         "parameters": {
                 "sshPublicKey":                { "value": "GEN-SSH-PUB-KEY" },
                 "fileServerDiskCount":         { "value": 2 },
-                "fileServerDiskSize":          { "value": 32 },
-                "moodleVersion": {
-                    "value": "MOODLE_311_STABLE"
-                },
-                "mysqlVersion": {
-                    "value": "8.0"
-                },
-                "autoscaleVmSku": {
-                    "value": "Standard_DS1_v2"
-                },
-                "enableAccelNwForOtherVmsSwitch": {
-                    "value": false
-                },
-                "redisDeploySwitch": {
-                    "value": false
-                }
+                "fileServerDiskSize":          { "value": 32 }
         }
 }
