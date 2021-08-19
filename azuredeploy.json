@@ -415,7 +415,7 @@
             "type": "int"
         },
         "fileServerDiskCount": {
-            "defaultValue": 2,
+            "defaultValue": 4,
             "minValue": 2,
             "maxValue": 8,
             "metadata": {
