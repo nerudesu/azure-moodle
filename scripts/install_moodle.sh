@@ -68,6 +68,7 @@ set -ex
     echo $fileServerDiskSize >>/tmp/vars.txt
     echo $phpVersion         >> /tmp/vars.txt
     echo $isMigration        >> /tmp/vars.txt
+    echo $mysqlVersion >>/tmp/vars.txt
 
     check_fileServerType_param $fileServerType
 
@@ -765,10 +766,19 @@ EOF
 
     if [ $dbServerType = "mysql" ]; then
         mysql -h $mysqlIP -u $mysqladminlogin -p${mysqladminpass} -e "CREATE DATABASE ${moodledbname} CHARACTER SET utf8;"
-        mysql -h $mysqlIP -u $mysqladminlogin -p${mysqladminpass} -e "GRANT ALL ON ${moodledbname}.* TO ${moodledbuser} IDENTIFIED BY '${moodledbpass}';"
+        echo "mysql -h $mysqlIP -u $mysqladminlogin -p${mysqladminpass} -e \"CREATE DATABASE ${moodledbname};\"" >> /tmp/sql_debug.log
 
-        echo "mysql -h $mysqlIP -u $mysqladminlogin -p${mysqladminpass} -e \"CREATE DATABASE ${moodledbname};\"" >> /tmp/debug
-        echo "mysql -h $mysqlIP -u $mysqladminlogin -p${mysqladminpass} -e \"GRANT ALL ON ${moodledbname}.* TO ${moodledbuser} IDENTIFIED BY '${moodledbpass}';\"" >> /tmp/debug
+        if [ "$mysqlVersion" = "8.0" ]; then
+        	# MySQL 8.0
+        	mysql -h $mysqlIP -P $mysqldbport -u $mysqladminlogin -p${mysqladminpass} -e "CREATE USER '${moodledbuser}' IDENTIFIED BY '${moodledbpass}';"
+        	echo "mysql -h $mysqlIP -P $mysqldbport -u $mysqladminlogin -p${mysqladminpass} -e \"CREATE USER '${moodledbuser}' IDENTIFIED BY '${moodledbpass}';\"" >>/tmp/sql_debug.log
+        	mysql -h $mysqlIP -P $mysqldbport -u $mysqladminlogin -p${mysqladminpass} -e "GRANT ALL ON ${moodledbname}.* TO '${moodledbuser}';"
+        	echo "mysql -h $mysqlIP -P $mysqldbport -u $mysqladminlogin -p${mysqladminpass} -e \"GRANT ALL ON ${moodledbname}.* TO ${moodledbuser};\"" >>/tmp/sql_debug.log
+        else
+            # MySQL 5.6 or 5.7
+            mysql -h $mysqlIP -u $mysqladminlogin -p${mysqladminpass} -e "GRANT ALL ON ${moodledbname}.* TO ${moodledbuser} IDENTIFIED BY '${moodledbpass}';"
+            echo "mysql -h $mysqlIP -u $mysqladminlogin -p${mysqladminpass} -e \"GRANT ALL ON ${moodledbname}.* TO ${moodledbuser} IDENTIFIED BY '${moodledbpass}';\"" >> /tmp/debug
+        fi
     elif [ $dbServerType = "mssql" ]; then
         /opt/mssql-tools/bin/sqlcmd -S $mssqlIP -U $mssqladminlogin -P ${mssqladminpass} -Q "CREATE DATABASE ${moodledbname} ( MAXSIZE = $mssqlDbSize, EDITION = '$mssqlDbEdition', SERVICE_OBJECTIVE = '$mssqlDbServiceObjectiveName' )"
         /opt/mssql-tools/bin/sqlcmd -S $mssqlIP -U $mssqladminlogin -P ${mssqladminpass} -Q "CREATE LOGIN ${moodledbuser} with password = '${moodledbpass}'" 

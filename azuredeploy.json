@@ -7,7 +7,7 @@
             "metadata": {
                 "description": "The base URI where artifacts required by this template are located. When the template is deployed using the accompanying scripts, a private location in the subscription will be used and this value will be automatically generated."
             },
-            "defaultValue": "https://raw.githubusercontent.com/Azure/Moodle/master/"
+            "defaultValue": "https://raw.githubusercontent.com/nerudesu/azure-moodle/master/"
         },
         "_artifactsLocationSasToken": {
             "type": "securestring",
@@ -114,6 +114,8 @@
         },
         "moodleVersion": {
             "allowedValues": [
+                "MOODLE_311_STABLE",
+                "MOODLE_310_STABLE",
                 "MOODLE_39_STABLE",
                 "MOODLE_38_STABLE"
             ],
@@ -281,7 +283,8 @@
         "mysqlVersion": {
             "allowedValues": [
                 "5.6",
-                "5.7"
+                "5.7",
+                "8.0"
             ],
             "defaultValue": "5.7",
             "metadata": {
