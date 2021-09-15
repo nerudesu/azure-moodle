@@ -353,6 +353,21 @@ server {
           proxy_read_timeout          3600;
           send_timeout                3600;
         }
+
+        error_page 404 /error/index.php;
+        error_page 403 =404 /error/index.php;
+
+        # Hide all dot files but allow "Well-Known URIs" as per RFC 5785
+        location ~ /\.(?!well-known).* {
+          return 404;
+        }
+
+        # This should be after the php fpm rule and very close to the last nginx ruleset.
+        # Don't allow direct access to various internal files. See MDL-69333
+        location ~ (/vendor/|/node_modules/|composer\.json|/readme|/README|readme\.txt|/upgrade\.txt|db/install\.xml|/fixtures/|/behat/|phpunit\.xml|\.lock|environment\.xml) {
+          deny all;
+          return 404;
+        }
 }
 
 EOF
