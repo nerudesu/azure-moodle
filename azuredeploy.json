@@ -31,7 +31,7 @@
             "type": "bool"
         },
         "redisDeploySwitch": {
-            "defaultValue": true,
+            "defaultValue": false,
             "metadata": {
                 "description": "Switch to deploy a redis cache or not. Note that certain versions of Moodle (e.g., 3.1) don't work well with Redis, so use this only for known well-working Moodle versions (e.g., 3.4)."
             },
@@ -157,7 +157,7 @@
             "type": "string"
         },
         "autoscaleVmSku": {
-            "defaultValue": "Standard_DS1_v2",
+            "defaultValue": "Standard_DS2_v2",
             "metadata": {
                 "description": "VM size for autoscaled web VMs"
             },
@@ -424,7 +424,7 @@
             "type": "int"
         },
         "fileServerVmSku": {
-            "defaultValue": "Standard_DS1_v2",
+            "defaultValue": "Standard_DS2_v2",
             "metadata": {
                 "description": "VM size for the gluster or NFS-HA nodes"
             },
