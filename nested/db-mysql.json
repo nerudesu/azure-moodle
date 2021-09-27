@@ -47,7 +47,7 @@
                 "storageProfile": {
                     "storageMB": "[mul(parameters('moodleCommon').mysqlPgresStgSizeGB, 1024)]",
                     "backupRetentionDays": "35",
-                    "geoRedundantBackup": "Disabled"
+                    "geoRedundantBackup": "[parameters('moodleCommon').mysqlBackup]"
                 },
                 "version": "[parameters('moodleCommon').mysqlVersion]"
             },

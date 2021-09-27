@@ -292,6 +292,17 @@
             },
             "type": "string"
         },
+        "mysqlBackup": {
+            "allowedValues": [
+                "Enabled",
+                "Disabled"
+            ],
+            "defaultValue": "Enabled",
+            "metadata": {
+                "description": "With mysqlPgresSkuTier set to Basic, Geo Redundant must be disabled"
+            },
+            "type": "string"
+        },
         "postgresVersion": {
             "allowedValues": [
                 "9.5",
@@ -1231,6 +1242,7 @@
             "mysqlPgresStgSizeGB": "[parameters('mysqlPgresStgSizeGB')]",
             "mysqlPgresVcores": "[parameters('mysqlPgresVcores')]",
             "mysqlVersion": "[parameters('mysqlVersion')]",
+            "mysqlBackup": "[parameters('mysqlBackup')]",
             "nfsByoIpExportPath": "[parameters('nfsByoIpExportPath')]",
             "nfsHaClientsIPRange": "[variables('subnetWebRange')]",
             "nfsHaExportPath": "/drbd/data",
